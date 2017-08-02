@@ -3,6 +3,6 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 build:
-  project: jsreport.Local.sln
+  project: ConsoleApp.sln
 before_build:
   - cmd: dotnet restore
