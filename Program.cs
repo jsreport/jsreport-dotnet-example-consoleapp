@@ -19,13 +19,55 @@ namespace ConsoleApp
                 .Configure(cfg => cfg.AllowLocalFilesAccess().FileSystemStore().BaseUrlAsWorkingDirectory())
                 .AsUtility()
                 .Create();
+            //.AsWebServer()
+            //.RedirectOutputToConsole()
 
-            Console.WriteLine("Rendering localy stored template jsreport/data/templates/Invoice into invoice.pdf");
-            var invoiceReport = rs.RenderByNameAsync("Invoice", InvoiceData).Result;
-            invoiceReport.Content.CopyTo(File.OpenWrite("invoice.pdf"));
+
+            /*            rs.StartAsync().Wait();
+                        Console.ReadLine();
+                        rs.KillAsync().Wait();
+                        return;*/
+
+            /* Console.WriteLine("Rendering localy stored template jsreport/data/templates/Invoice into invoice.pdf");
+             var invoiceReport = rs.RenderByNameAsync("Invoice", InvoiceData).Result;
+
+             var logs = "";            
+             long startTime = invoiceReport.Meta.Logs.First().Timestamp.Ticks;
+             foreach (var l in invoiceReport.Meta.Logs)
+             {               
+                 logs += $"+{Math.Round((double)(l.Timestamp.Ticks - startTime)/1000)} {l.Message}\n";
+             }            
+
+             invoiceReport.Content.CopyTo(File.OpenWrite("invoice.pdf"));*/
 
             Console.WriteLine("Rendering custom report fully described through the request object into customReport.pdf");
-            var customReport = rs.RenderAsync(CustomRenderRequest).Result;
+            var customReport = rs.RenderAsync(new RenderRequest()
+            {
+                Template = new Template()
+                {
+                    Content = File.ReadAllText("test.html"),
+                    Engine = Engine.None,
+                    Recipe = Recipe.PhantomPdf
+                }
+            }).Result;
+
+            customReport = rs.RenderAsync(new RenderRequest()
+            {
+                Template = new Template()
+                {
+                    Content = /*File.ReadAllText("test.html")*/"Hello",
+                    Engine = Engine.None,
+                    Recipe = Recipe.PhantomPdf
+                }
+            }).Result;
+
+            var logs = "";
+            long startTime = customReport.Meta.Logs.First().Timestamp.Ticks;
+            foreach (var l in customReport.Meta.Logs)
+            {
+                logs += $"+{Math.Round((double)(l.Timestamp.Ticks - startTime) / 1000)} {l.Message}\n";
+            }
+
             customReport.Content.CopyTo(File.OpenWrite("customReport.pdf"));
         }   
 
