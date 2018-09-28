@@ -17,12 +17,9 @@ namespace ConsoleApp
                 .RunInDirectory(Path.Combine(Directory.GetCurrentDirectory(), "jsreport"))
                 .KillRunningJsReportProcesses()
                 .UseBinary(JsReportBinary.GetBinary())
-                .Configure(cfg => cfg.AllowLocalFilesAccess().FileSystemStore().BaseUrlAsWorkingDirectory())
-                .AsWebServer()
+                .Configure(cfg => cfg.AllowedLocalFilesAccess().FileSystemStore().BaseUrlAsWorkingDirectory())
+                .AsUtility()
                 .Create();
-
-            rs.StartAsync().Wait();
-            Console.ReadKey();
 
             Console.WriteLine("Rendering localy stored template jsreport/data/templates/Invoice into invoice.pdf");
             var invoiceReport = rs.RenderByNameAsync("Invoice", InvoiceData).Result;
@@ -39,7 +36,7 @@ namespace ConsoleApp
             {
                 Content = "Helo world from {{message}}",
                 Engine = Engine.Handlebars,
-                Recipe = Recipe.PhantomPdf
+                Recipe = Recipe.ChromePdf
             },
             Data = new
             {
