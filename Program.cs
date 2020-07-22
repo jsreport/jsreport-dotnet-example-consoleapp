@@ -28,6 +28,8 @@ namespace ConsoleApp
             Console.WriteLine("Rendering custom report fully described through the request object into customReport.pdf");
             var customReport = rs.RenderAsync(CustomRenderRequest).Result;
             customReport.Content.CopyTo(File.OpenWrite("customReport.pdf"));
+            Console.WriteLine("Done, hit any key...");
+            Console.ReadKey();
         }
 
         private static RenderRequest CustomRenderRequest = new RenderRequest()
