@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   
   <ItemGroup>
@@ -10,7 +10,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="jsreport.Types" Version="2.7.0" />
+    <PackageReference Include="jsreport.Types" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,8 +29,8 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="jsreport.Local" Version="2.2.3" />
-        <PackageReference Include="jsreport.Binary" Version="2.9.0" />
+        <PackageReference Include="jsreport.Local" Version="2.3.1" />
+        <PackageReference Include="jsreport.Binary" Version="2.11.0" />
       </ItemGroup>
     </Otherwise>
   </Choose>
