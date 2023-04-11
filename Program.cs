@@ -17,7 +17,7 @@ namespace ConsoleApp
                 .RunInDirectory(Path.Combine(Directory.GetCurrentDirectory(), "jsreport"))
                 .KillRunningJsReportProcesses()
                 .UseBinary(JsReportBinary.GetBinary())
-                .Configure(cfg => cfg.AllowedLocalFilesAccess().FileSystemStore().BaseUrlAsWorkingDirectory())
+                .Configure(cfg => cfg.DoTrustUserCode().FileSystemStore().BaseUrlAsWorkingDirectory())
                 .AsUtility()
                 .Create();
 
